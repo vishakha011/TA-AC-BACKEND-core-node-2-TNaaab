@@ -4,22 +4,25 @@ var qs = require('querystring');
 var server = http.createServer(handleRequest);
 
 function handleRequest(req, res) {
-    var dataFormat = req.headers['content-type']
+    // var dataFormat = req.headers['content-type']
     var capturedData = "";
     req.on("data", (chunk) => {
         capturedData += chunk;
     });
     req.on("end", () => {
-        if(dataFormat === 'application/json') {
-            var parsedData = JSON.parse(capturedData);
-            res.end(capturedData)
+        if(req.method === "POST" && req.url === "/json") {
+            res.setHeader('Content-Type', 'application/json')
+            res.end(capturedData);
+            console.log(capturedData)
         }
-        else if(dataFormat === 'application/x-www-form-urlencoded') {
+        else if(req.method === "POST" && req.url === "/form") {
             var parsedData = qs.parse(capturedData);
+            res.setHeader('Content-Type', 'application/x-www-form-urlencoded')
             res.end(JSON.stringify(parsedData));
+            console.log(capturedData)
         }
        
-    })
+    });
 
     
 }
