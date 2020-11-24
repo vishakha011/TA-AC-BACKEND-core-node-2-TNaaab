@@ -16,6 +16,16 @@ Write code to
   - get relative path of `index.js` 
   - get absolute path of `index.js`
 
+  ```
+  var path = require('path')
+
+  var relativePathOfIndexJs = './clients/index.js';
+
+  var absolutePathOfIndexJs = path.join(__dirname, relativePathOfIndexJs)
+
+  console.log(relativePathOfIndexJs, absolutePathOfIndexJs);
+  ```
+
 #### server
 Create a basic http server which should grab data from a HTML form rendered on a specific route and display the content on a seperate page.
 
